@@ -3,6 +3,9 @@ public class Main {
         System.out.println("==============================");
         System.out.println("      SISTEMA DE PROJETOS     ");
         System.out.println("==============================");
-        System.out.println("Bem-vindo ao sistema!");
+        System.out.println();
+        System.out.println("Projeto: Portfólio Acadêmico");
+        System.out.println("Desenvolvido em Java");
+        System.out.println("Versão: 1.0");
     }
 }
