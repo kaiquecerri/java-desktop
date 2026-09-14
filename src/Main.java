@@ -1,4 +1,5 @@
 import model.Projeto;
+import service.ProjetoService;
 
 public class Main {
     public static void main(String[] args) {
@@ -6,9 +7,8 @@ public class Main {
         System.out.println("      SISTEMA DE PROJETOS     ");
         System.out.println("==============================");
         System.out.println();
-        System.out.println("Projeto: Portfólio Acadêmico");
-        System.out.println("Desenvolvido em Java");
-        System.out.println("Versão: 1.0");
+
+        ProjetoService service = new ProjetoService();
 
         Projeto projeto1 = new Projeto(
             1, 
@@ -26,8 +26,24 @@ public class Main {
             "Concluído"
         );
 
-        projeto1.exibirDados();
-        System.out.println();
-        projeto2.exibirDados();
+        service.adicionar(projeto1);
+        service.adicionar(projeto2);
+
+        service.removerPorId(2);
+
+        System.out.println("Total de projetos: " + service.listar().size());
+        System.out.println("---------------------------------");
+
+        for(
+            Projeto projeto :
+            service.buscarPorStatus("concluído")
+        ) {
+            projeto.exibirDados();
+        }
+        
+        for(Projeto projeto : service.listar()) {
+            projeto.exibirDados();
+            System.out.println("---------------------------------");
+        }
     }
 }
