@@ -1,14 +1,20 @@
 import model.Projeto;
 import service.ProjetoService;
 
+import java.io.IOException;
+
+import dao.ProjetoCSV;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
         System.out.println("==============================");
         System.out.println("      SISTEMA DE PROJETOS     ");
         System.out.println("==============================");
         System.out.println();
 
         ProjetoService service = new ProjetoService();
+
+        ProjetoCSV dao = new ProjetoCSV();
 
         Projeto projeto1 = new Projeto(
             1, 
@@ -28,35 +34,14 @@ public class Main {
 
         service.adicionar(projeto1);
         service.adicionar(projeto2);
-        metodo1(service);
+        
+        dao.salvar(service.listar());
+        System.out.println("Dados salvos.");
 
-        service.removerPorId(2);
-
-        System.out.println("Total de projetos: " + service.listar().size());
-        System.out.println("---------------------------------");
-
-        for(
-            Projeto projeto :
-            service.buscarPorStatus("concluído")
-        ) {
+        for(Projeto projeto : dao.listar()) {
             projeto.exibirDados();
         }
         
-        for(Projeto projeto : service.listar()) {
-            projeto.exibirDados();
-            System.out.println("---------------------------------");
-        }
     }
 
-    public static void metodo1(ProjetoService service) {
-        Projeto projeto3 = new Projeto(
-            3,
-            "Website Institucional",
-            "Um site para a Fatec",
-            "Web",
-            "Concluído"
-        );
-
-        service.adicionar(projeto3);
-    }
 }
