@@ -1,13 +1,27 @@
 package service;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import dao.ProjetoCSV;
 import model.Projeto;
 
 public class ProjetoService {
     private List<Projeto> projetos;
+    private ProjetoCSV dao;
 
     public ProjetoService() {
         projetos = new ArrayList<>();
+        dao = new ProjetoCSV();
+
+    }
+
+    public void carregar() throws IOException {
+        projetos = dao.listar();
+    }
+
+    public void salvar() throws IOException {
+        dao.salvar(projetos);
     }
 
     public boolean adicionar(Projeto projeto) {
