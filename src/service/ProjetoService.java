@@ -68,6 +68,22 @@ public class ProjetoService {
         return resultado;
     }
 
+    public List<Projeto> buscarPorNome(String nome){
+        List<Projeto> resultado = new ArrayList<>();
+
+        for(Projeto projeto : projetos) {
+            if (
+                projeto.getNome()
+                    .toLowerCase()
+                    .contains(nome.toLowerCase())
+            ) {
+                resultado.add(projeto);
+            }
+        }
+
+        return resultado;
+    }
+
     public boolean removerPorId(int id) {
         Projeto projeto = buscarPorId(id);
 
@@ -78,5 +94,20 @@ public class ProjetoService {
         }
 
         return false;
+    }
+
+    public int contarPorCategoria(String categoria) {
+        return buscarPorCategoria(categoria).size();
+    }
+
+    public boolean alterarStatus(int id, String novoStatus) {
+        Projeto projeto = buscarPorId(id);
+
+        if(projeto == null) {
+            return false;
+        }
+
+        projeto.setStatus(novoStatus);
+        return true;
     }
 }

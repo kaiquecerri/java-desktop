@@ -28,6 +28,7 @@ public class Main {
 
         service.adicionar(projeto1);
         service.adicionar(projeto2);
+        metodo1(service);
 
         service.removerPorId(2);
 
@@ -45,5 +46,17 @@ public class Main {
             projeto.exibirDados();
             System.out.println("---------------------------------");
         }
+    }
+
+    public static void metodo1(ProjetoService service) {
+        Projeto projeto3 = new Projeto(
+            3,
+            "Website Institucional",
+            "Um site para a Fatec",
+            "Web",
+            "Concluído"
+        );
+
+        service.adicionar(projeto3);
     }
 }
