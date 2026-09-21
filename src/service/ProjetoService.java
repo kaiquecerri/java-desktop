@@ -40,6 +40,44 @@ public class ProjetoService {
         return true;
     }
 
+    public boolean alterar(Projeto projetoAtualizado) {
+        Projeto projeto = buscarPorId(projetoAtualizado.getId());
+
+        if (projeto == null) {
+            return false;
+        }
+
+        projeto.setNome(
+            projetoAtualizado.getNome()
+        );
+
+        projeto.setDescricao(
+            projetoAtualizado.getDescricao()
+        );
+
+        projeto.setCategoria(
+            projetoAtualizado.getCategoria()
+        );
+
+        projeto.setStatus(
+            projetoAtualizado.getStatus()
+        );
+
+        return true;
+    }
+
+    public boolean removerPorId(int id) {
+        Projeto projeto = buscarPorId(id);
+
+        if(projeto != null) {
+            projetos.remove(projeto);
+
+            return true;
+        }
+
+        return false;
+    }
+
     public List<Projeto> listar() {
         return projetos;
     }
@@ -96,18 +134,6 @@ public class ProjetoService {
         }
 
         return resultado;
-    }
-
-    public boolean removerPorId(int id) {
-        Projeto projeto = buscarPorId(id);
-
-        if(projeto != null) {
-            projetos.remove(projeto);
-
-            return true;
-        }
-
-        return false;
     }
 
     public int contarPorCategoria(String categoria) {
