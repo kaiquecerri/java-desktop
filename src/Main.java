@@ -69,27 +69,27 @@ public class Main {
                     System.out.println("Insira os dados solicitados a seguir.");
 
                     System.out.print("ID: ");
-                    int id = sc.nextInt();
+                    int idCriar = sc.nextInt();
                     sc.nextLine();
 
                     System.out.print("Nome: ");
-                    String nome = sc.nextLine();
+                    String nomeCriar = sc.nextLine();
 
                     System.out.print("Descrição: ");
-                    String descricao = sc.nextLine();
+                    String descricaoCriar = sc.nextLine();
 
                     System.out.print("Categoria: ");
-                    String categoria = sc.nextLine();
+                    String categoriaCriar = sc.nextLine();
 
                     System.out.print("Status: ");
-                    String status = sc.nextLine();
+                    String statusCriar = sc.nextLine();
 
                     Projeto projetoNovo = new Projeto (
-                        id,
-                        nome,
-                        descricao,
-                        categoria,
-                        status
+                        idCriar,
+                        nomeCriar,
+                        descricaoCriar,
+                        categoriaCriar,
+                        statusCriar
                     );
 
                     boolean cadastrado = service.adicionar(projetoNovo);
@@ -105,11 +105,85 @@ public class Main {
                     break;
 
                 case 4:
-                    System.out.println("Alterar");
+                    System.out.println("---- ALTERAR PROJETO ----");
+                    System.out.print("Insira o ID do projeto que deseja alterar: ");
+                    int idAlterar = sc.nextInt();
+                    sc.nextLine();
+                    
+                    Projeto existente = service.buscarPorId(idAlterar);
+                    if (existente == null) {
+                        System.out.println("Projeto não encontrado.");
+                        break;
+                    }
+
+                    System.out.println("Projeto atual: ");
+                    existente.exibirDados();
+
+                    System.out.print("Novo nome: ");
+                    String nomeAlterar = sc.nextLine();
+
+                    System.out.print("Nova descrição: ");
+                    String descricaoAlterar = sc.nextLine();
+
+                    System.out.print("Nova categoria: ");
+                    String categoriaAlterar = sc.nextLine();
+
+                    System.out.print("Novo status: ");
+                    String statusAlterar = sc.nextLine();
+
+                    Projeto atualizado = new Projeto(
+                        idAlterar, 
+                        nomeAlterar, 
+                        descricaoAlterar, 
+                        categoriaAlterar, 
+                        statusAlterar
+                    );
+
+                    boolean alterado = service.alterar(atualizado);
+
+                    if(alterado) {
+                        service.salvar();
+
+                        System.out.println("Projeto alterado com sucesso.");
+                    } else {
+                        System.out.println("Não foi possível alterar.");
+                    }
+
                     break;
 
                 case 5:
-                    System.out.println("Excluir");
+                    System.out.println("---- EXCLUIR PROJETO ----");
+                    System.out.print("Insira o ID do projeto que deseja excluir: ");
+                    int idExcluir = sc.nextInt();
+                    sc.nextLine();
+
+                    Projeto existe = service.buscarPorId(idExcluir);
+
+                    if(existe == null) {
+                        System.out.println("Este projeto não foi encontrado.");
+
+                        break;
+                    }
+                    
+                    existe.exibirDados();
+                    System.out.println("Tem certeza que deseja excluir este projeto?");
+                    System.out.print("S (Sim) ou N (Não): ");
+                    String confirmacao = sc.nextLine();
+
+                    if(confirmacao.equalsIgnoreCase("s")) {
+                        boolean removido = service.remover(idExcluir);
+                        
+                        if(removido) {
+                            service.salvar();
+                            System.out.println("Projeto excluído com sucesso.");
+                        } else {
+                            System.out.println("Não foi possível excluir este projeto.");
+                        }
+                    } else {
+                        System.out.println("Exclusão cancelada.");
+                    }
+
+
                     break;
             
                 default:
@@ -117,7 +191,8 @@ public class Main {
                     break;
             }
         }
-          
+
+        sc.close();
     }
 
 }

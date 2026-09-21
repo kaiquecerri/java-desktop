@@ -66,7 +66,7 @@ public class ProjetoService {
         return true;
     }
 
-    public boolean removerPorId(int id) {
+    public boolean remover(int id) {
         Projeto projeto = buscarPorId(id);
 
         if(projeto != null) {
