@@ -23,6 +23,7 @@ public class TelaPrincipal extends JFrame {
 
         private JButton botaoCadastrar;
         private JButton botaoLimpar;
+        private JButton botaoExcluirSelecionado;
 
         private DefaultTableModel modelo;
         private JTable tabela;
@@ -78,6 +79,8 @@ public class TelaPrincipal extends JFrame {
         
         botaoLimpar = new JButton("Limpar");
 
+        botaoExcluirSelecionado = new JButton("Excluir selecionado");
+
         modelo = new DefaultTableModel();
 
         modelo.addColumn("ID");
@@ -104,6 +107,7 @@ public class TelaPrincipal extends JFrame {
 
         painelFormulario.add(botaoCadastrar);
         painelFormulario.add(botaoLimpar);
+        painelFormulario.add(botaoExcluirSelecionado);
 
         setLayout(new BoxLayout(
             getContentPane(), 
@@ -117,6 +121,7 @@ public class TelaPrincipal extends JFrame {
     private void criarEventos() {
         botaoCadastrar.addActionListener(e -> cadastrar());
         botaoLimpar.addActionListener(e -> limparFormulario());
+        botaoExcluirSelecionado.addActionListener(e -> excluirSelecionadoTabela());
     }
 
     private void cadastrar() {
@@ -173,6 +178,33 @@ public class TelaPrincipal extends JFrame {
         comboCategoria.setSelectedIndex(0);
         comboStatus.setSelectedIndex(0);
         campoNome.requestFocus();
+    }
+
+    private void excluirSelecionadoTabela() {
+        int linha = tabela.getSelectedRow();
+
+        if(linha != -1) {
+            Object nomeProjetoSelecionado = tabela.getValueAt(linha, 1);
+            int selecionado = JOptionPane.showConfirmDialog(this, "Projeto selecionado: " + nomeProjetoSelecionado.toString() + "\nVocê tem certeza que deseja excluir? Não é possível reverter.");
+            
+            if(selecionado == 0) {
+                int idProjetoSelecionado = (Integer) tabela.getValueAt(linha, 0);
+                service.remover(idProjetoSelecionado);
+                try {
+                    service.salvar();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                carregarTabela();
+                
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(
+                this,
+                "Selecione um projeto."
+            );
+        }
     }
     
     private void carregarTabela() {
