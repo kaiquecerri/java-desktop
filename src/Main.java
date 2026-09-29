@@ -4,8 +4,14 @@ import service.ProjetoService;
 import java.io.IOException;
 import java.util.Scanner;
 
+import view.TelaPrincipal;
+
 public class Main {
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) {
+        TelaPrincipal.main(args);
+    }
+
+    private void menuTerminal() throws IOException{
         Scanner sc = new Scanner(System.in);
 
         ProjetoService service = new ProjetoService();
