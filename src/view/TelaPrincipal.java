@@ -23,6 +23,7 @@ public class TelaPrincipal extends JFrame {
 
         private JButton botaoCadastrar;
         private JButton botaoLimpar;
+        private JButton botaoAlterarSelecionado;
         private JButton botaoExcluirSelecionado;
 
         private DefaultTableModel modelo;
@@ -79,6 +80,8 @@ public class TelaPrincipal extends JFrame {
         
         botaoLimpar = new JButton("Limpar");
 
+        botaoAlterarSelecionado = new JButton("Alterar selecionado");
+
         botaoExcluirSelecionado = new JButton("Excluir selecionado");
 
         modelo = new DefaultTableModel();
@@ -107,6 +110,7 @@ public class TelaPrincipal extends JFrame {
 
         painelFormulario.add(botaoCadastrar);
         painelFormulario.add(botaoLimpar);
+        painelFormulario.add(botaoAlterarSelecionado);
         painelFormulario.add(botaoExcluirSelecionado);
 
         setLayout(new BoxLayout(
@@ -121,7 +125,13 @@ public class TelaPrincipal extends JFrame {
     private void criarEventos() {
         botaoCadastrar.addActionListener(e -> cadastrar());
         botaoLimpar.addActionListener(e -> limparFormulario());
+        botaoAlterarSelecionado.addActionListener(e -> alterarSelecionadoTabela());
         botaoExcluirSelecionado.addActionListener(e -> excluirSelecionadoTabela());
+        tabela.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+            carregarSelecionadoTabelaForm();
+            }
+        });
     }
 
     private void cadastrar() {
@@ -156,7 +166,16 @@ public class TelaPrincipal extends JFrame {
             status
         );
 
-        service.adicionar(projeto);
+        boolean salvou = service.adicionar(projeto);
+        if(!salvou) {
+            JOptionPane.showMessageDialog(
+            this,
+            "Não foi possível cadastrar o projeto."
+            );
+
+            return;
+        }
+
         try {
             service.salvar();
         } catch (IOException e) {
@@ -195,16 +214,97 @@ public class TelaPrincipal extends JFrame {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                carregarTabela();
-                
+                carregarTabela();   
             }
-
         } else {
             JOptionPane.showMessageDialog(
                 this,
                 "Selecione um projeto."
             );
         }
+    }
+
+    private void carregarSelecionadoTabelaForm() {
+        int linha = tabela.getSelectedRow();
+
+        if(linha != -1) {
+        campoNome.setText(String.valueOf(tabela.getValueAt(linha, 1)));
+        campoDescricao.setText(String.valueOf(tabela.getValueAt(linha, 2)));
+        comboCategoria.setSelectedItem(tabela.getValueAt(linha, 3));
+        comboStatus.setSelectedItem(tabela.getValueAt(linha, 4));
+        campoNome.requestFocus();
+        }
+    }
+
+    private void alterarSelecionadoTabela() {
+        int linha = tabela.getSelectedRow();
+
+        if(linha == -1) {
+            JOptionPane.showMessageDialog(
+                this, 
+                "Selecione um projeto da tabela."
+            );
+
+            return;
+        }
+
+        String nome = campoNome.getText();
+        if (nome.isBlank()) {
+            JOptionPane.showMessageDialog(
+                this, 
+                "Informe o nome."
+            );
+
+            return;
+        }
+
+        String descricao = campoDescricao.getText();
+        if (descricao.isBlank()) {
+            JOptionPane.showMessageDialog(
+                this, 
+                "Informe a descrição."
+            );
+
+            return;
+        }
+
+        String categoria = comboCategoria.getSelectedItem().toString();
+        String status = comboStatus.getSelectedItem().toString();
+
+        int id = (Integer) tabela.getValueAt(linha,0);
+
+        Projeto projeto = new Projeto(
+            id,
+            nome,
+            descricao,
+            categoria,
+            status
+        );
+
+        boolean alterou = service.alterar(projeto);
+
+        if(!alterou) {
+            JOptionPane.showMessageDialog(
+            this,
+            "Não foi possível alterar o projeto."
+            );
+
+            return;
+        }
+
+        try {
+            service.salvar();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        JOptionPane.showMessageDialog(
+            this,
+            "Projeto " + nome + " alterado com sucesso."
+        );
+
+        limparFormulario();
+        carregarTabela();
     }
     
     private void carregarTabela() {
