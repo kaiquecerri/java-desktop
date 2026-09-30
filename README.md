@@ -26,3 +26,9 @@ O objetivo deste projeto é demonstrar a integração de serviços Web (APIs RES
 * **Camada de Serviço Reutilizável:** A lógica de consumo da API é compartilhada entre os módulos Desktop e Web.
 
 ---
+
+## 🖥️ Como rodar o projeto?
+
+* **Clone o projeto:** git clone 'https://github.com/kaiquecerri/java-desktop'
+* **Compile:** mvn compile
+* **Rode o projeto:** mvn exec:java '-Dexec.mainClass=Main'

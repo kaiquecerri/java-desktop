@@ -12,7 +12,7 @@ public class ProjetoCSV {
     private Path caminho;
     
     public ProjetoCSV() {
-        caminho = Path.of("dao/projetos.csv");
+        caminho = Path.of("src/dao/projetos.csv");
     }
     
     public void salvar(List<Projeto> projetos) throws IOException {
