@@ -12,13 +12,14 @@ import util.ErroResponse;
 public class Api {
     public static void main(String[] args) {
         ProjetoService service = new ProjetoService();
-    try {
-        service.carregar();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
+        
+        try {
+            service.carregar();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        var app = Javalin.create(config -> {
+        Javalin.create(config -> {
 
             //
             // METODOS GET
