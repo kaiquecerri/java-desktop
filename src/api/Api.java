@@ -7,6 +7,7 @@ import io.javalin.Javalin;
 
 import model.Projeto;
 import service.ProjetoService;
+import util.ErroResponse;
 
 public class Api {
     public static void main(String[] args) {
@@ -18,6 +19,10 @@ public class Api {
     }
 
         var app = Javalin.create(config -> {
+
+            //
+            // METODOS GET
+            //
 
             //PROJETOS
             config.routes.get("/", ctx -> {
@@ -67,6 +72,96 @@ public class Api {
                 
                 ctx.json(statuts);
             });
+
+            //
+            // METODOS POST
+            //
+
+            //CRIAR NOVO PROJETO
+            config.routes.post("/api/projetos", ctx -> {
+                Projeto projeto = ctx.bodyAsClass(Projeto.class);
+
+                if (projeto.getNome() == null ||
+                    projeto.getNome().isBlank()) {
+
+                    ctx.status(400); //ERRO
+
+                    ctx.json(
+                        new ErroResponse("Nome é obrigatório")
+                    ); //MOTIVO
+
+                    return;
+                }
+
+                service.adicionar(projeto);
+                service.salvar();
+
+                ctx.status(201); //DEU CERTO
+                ctx.json(projeto); //DEVOLVE O PROJETO
+            });
+
+            //
+            // METODOS PUT
+            //
+
+            //EDITAR PROJETO
+
+            config.routes.put(
+            "/api/projetos/{id}",
+                ctx -> {
+
+                    int id = Integer.parseInt(
+                        ctx.pathParam("id")
+                    );
+
+                    Projeto projeto = ctx.bodyAsClass(Projeto.class);
+                    projeto.setId(id);
+
+                    boolean alterou = service.alterar(id, projeto);
+
+                    if (!alterou) {
+                        ctx.status(404);
+                        ctx.json(
+                            new ErroResponse("Não foi possível alterar este projeto")
+                        );
+                        return;
+                    }
+
+                    service.salvar();
+
+                    ctx.json(projeto);
+                }
+            );
+
+            //
+            // METODOS DELETE
+            //
+
+            //EDITAR PROJETO
+            config.routes.delete(
+                "/api/projetos/{id}",
+                ctx -> {
+
+                    int id = Integer.parseInt(
+                        ctx.pathParam("id")
+                    );
+
+                    Projeto projeto = service.buscarPorId(id);
+
+                    if (projeto == null) {
+                        ctx.status(404);
+                        ctx.json(
+                            new ErroResponse("Não foi possível localizar este projeto")
+                        );
+                        return;
+                    }
+
+                    service.remover(id);
+                    service.salvar();
+
+                    ctx.status(204);
+                }
+            );
 
         }).start(7070);
     }

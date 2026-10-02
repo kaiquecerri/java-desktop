@@ -36,12 +36,33 @@ public class ProjetoService {
             return false;
         }
 
+        if(projeto.getId() == 0) {
+            projeto.setId(
+                proximoId()
+            );
+        }   
+
         projetos.add(projeto);
         return true;
     }
 
-    public boolean alterar(Projeto projetoAtualizado) {
-        Projeto projeto = buscarPorId(projetoAtualizado.getId());
+    public int proximoId() {
+        int maior = 0;
+
+        for (Projeto projeto : projetos) {
+
+            if (projeto.getId() > maior) {
+                maior = projeto.getId();
+            }
+        }
+
+        return maior + 1;
+    }
+
+
+
+    public boolean alterar(int id, Projeto projetoAtualizado) {
+        Projeto projeto = buscarPorId(id);
 
         if (projeto == null) {
             return false;

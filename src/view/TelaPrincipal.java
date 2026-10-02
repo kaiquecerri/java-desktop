@@ -159,7 +159,6 @@ public class TelaPrincipal extends JFrame {
         String status = comboStatus.getSelectedItem().toString();
 
         Projeto projeto = new Projeto(
-            service.listar().size() + 1,
             nome,
             descricao,
             categoria,
@@ -274,14 +273,13 @@ public class TelaPrincipal extends JFrame {
         int id = (Integer) tabela.getValueAt(linha,0);
 
         Projeto projeto = new Projeto(
-            id,
             nome,
             descricao,
             categoria,
             status
         );
 
-        boolean alterou = service.alterar(projeto);
+        boolean alterou = service.alterar(id, projeto);
 
         if(!alterou) {
             JOptionPane.showMessageDialog(

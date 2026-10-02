@@ -9,8 +9,8 @@ import view.TelaPrincipal;
 
 public class Main {
     public static void main(String[] args) {
-        //TelaPrincipal.main(args);
-        Api.main(args);
+        TelaPrincipal.main(args);
+        //Api.main(args);
     }
 
     private void menuTerminal() throws IOException{
@@ -76,9 +76,6 @@ public class Main {
                     System.out.println("---- CADASTRAR PROJETO ----");
                     System.out.println("Insira os dados solicitados a seguir.");
 
-                    System.out.print("ID: ");
-                    int idCriar = sc.nextInt();
-                    sc.nextLine();
 
                     System.out.print("Nome: ");
                     String nomeCriar = sc.nextLine();
@@ -93,7 +90,6 @@ public class Main {
                     String statusCriar = sc.nextLine();
 
                     Projeto projetoNovo = new Projeto (
-                        idCriar,
                         nomeCriar,
                         descricaoCriar,
                         categoriaCriar,
@@ -140,14 +136,13 @@ public class Main {
                     String statusAlterar = sc.nextLine();
 
                     Projeto atualizado = new Projeto(
-                        idAlterar, 
                         nomeAlterar, 
                         descricaoAlterar, 
                         categoriaAlterar, 
                         statusAlterar
                     );
 
-                    boolean alterado = service.alterar(atualizado);
+                    boolean alterado = service.alterar(idAlterar, atualizado);
 
                     if(alterado) {
                         service.salvar();

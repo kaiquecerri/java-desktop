@@ -10,6 +10,13 @@ public class Projeto {
     public Projeto() {
     }
 
+    public Projeto(String nome, String descricao, String categoria, String status) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.categoria = categoria;
+        this.status = status;
+    }
+
     public Projeto(int id, String nome, String descricao, String categoria, String status) {
         this.id = id;
         this.nome = nome;
