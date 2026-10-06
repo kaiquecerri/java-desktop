@@ -14,7 +14,8 @@ O objetivo deste projeto é demonstrar a integração de serviços Web (APIs RES
 
 * **Linguagem:** Java (JDK 17+)
 * **Interface Desktop:** Java Swing
-* **Consumo de API:** `HttpClient` / `HttpURLConnection`
+* **Consumo de API:** `Javalin`
+* **Gerenciador de Pacotes:** `Maven`
 
 ---
 
@@ -30,5 +31,4 @@ O objetivo deste projeto é demonstrar a integração de serviços Web (APIs RES
 ## 🖥️ Como rodar o projeto?
 
 * **Clone o projeto:** git clone 'https://github.com/kaiquecerri/java-desktop'
-* **Compile:** mvn compile
-* **Rode o projeto:** mvn exec:java '-Dexec.mainClass=Main'
+* **Rode:** ./start.sh
