@@ -25,6 +25,7 @@ public class TelaPrincipal extends JFrame {
         private JButton botaoLimpar;
         private JButton botaoAlterarSelecionado;
         private JButton botaoExcluirSelecionado;
+        private JButton botaoRecarregarDados;
 
         private DefaultTableModel modelo;
         private JTable tabela;
@@ -84,6 +85,8 @@ public class TelaPrincipal extends JFrame {
 
         botaoExcluirSelecionado = new JButton("Excluir selecionado");
 
+        botaoRecarregarDados = new JButton("Recarregar");
+
         modelo = new DefaultTableModel();
 
         modelo.addColumn("ID");
@@ -112,6 +115,7 @@ public class TelaPrincipal extends JFrame {
         painelFormulario.add(botaoLimpar);
         painelFormulario.add(botaoAlterarSelecionado);
         painelFormulario.add(botaoExcluirSelecionado);
+        painelFormulario.add(botaoRecarregarDados);
 
         setLayout(new BoxLayout(
             getContentPane(), 
@@ -131,6 +135,14 @@ public class TelaPrincipal extends JFrame {
             if (!e.getValueIsAdjusting()) {
             carregarSelecionadoTabelaForm();
             }
+        });
+        botaoRecarregarDados.addActionListener(e -> {
+            try {
+                service.carregar();
+            } catch (IOException er) {
+                er.printStackTrace();
+            }
+            carregarTabela();
         });
     }
 

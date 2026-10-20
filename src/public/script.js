@@ -41,7 +41,7 @@ async function CarregarEditar(id) {
                   class="form-control"
                   name="nome"
                   id="nomeEditar"
-                  placeholder=${projeto.nome}
+                  placeholder="${projeto.nome}"
                 />
               </div>
 
@@ -52,7 +52,7 @@ async function CarregarEditar(id) {
                   class="form-control"
                   name="descricao"
                   id="descricaoEditar"
-                  placeholder=${projeto.descricao}
+                  placeholder="${projeto.descricao}"
                 />
               </div>
 
