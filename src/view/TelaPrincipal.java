@@ -74,7 +74,7 @@ public class TelaPrincipal extends JFrame {
 
         comboStatus.addItem("Em planejamento");
         comboStatus.addItem("Em desenvolvimento");
-        comboStatus.addItem("Concluído");
+        comboStatus.addItem("Concluido");
 
         botaoCadastrar = new JButton("Cadastrar");
         

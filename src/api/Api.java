@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import io.javalin.Javalin;
+import io.javalin.http.staticfiles.Location;   
 
 import model.Projeto;
 import service.ProjetoService;
@@ -21,6 +22,12 @@ public class Api {
 
         Javalin.create(config -> {
 
+            config.staticFiles.add(staticFiles -> {
+                staticFiles.hostedPath = "/";
+                staticFiles.directory = "src/public";  // caminho relativo ao projeto
+                staticFiles.location = Location.EXTERNAL;
+            });
+
             //
             // METODOS GET
             //
@@ -31,11 +38,22 @@ public class Api {
             });
 
             config.routes.get("/api/projetos", ctx -> {
+                try {
+                    service.carregar();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 List<Projeto> projetos = service.listar();
                 ctx.json(projetos);
             });
 
             config.routes.get("/api/projeto/{id}", ctx -> {
+                try {
+                    service.carregar();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 int id = Integer.parseInt(
                     ctx.pathParam("id")
                 );
@@ -67,9 +85,9 @@ public class Api {
 
             config.routes.get("/api/status", ctx -> {
                 String statuts[] = new String[3];
-                statuts[0] = "Planejado";
+                statuts[0] = "Em planejamento";
                 statuts[1] = "Em desenvolvimento";
-                statuts[2] = "Concluído";
+                statuts[2] = "Concluido";
                 
                 ctx.json(statuts);
             });
@@ -79,7 +97,13 @@ public class Api {
             //
 
             //CRIAR NOVO PROJETO
-            config.routes.post("/api/projetos", ctx -> {
+            config.routes.post("/api/projeto", ctx -> {
+                try {
+                    service.carregar();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 Projeto projeto = ctx.bodyAsClass(Projeto.class);
 
                 if (projeto.getNome() == null ||
@@ -108,8 +132,13 @@ public class Api {
             //EDITAR PROJETO
 
             config.routes.put(
-            "/api/projetos/{id}",
+            "/api/projeto/{id}",
                 ctx -> {
+                    try {
+                    service.carregar();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                     int id = Integer.parseInt(
                         ctx.pathParam("id")
@@ -117,6 +146,14 @@ public class Api {
 
                     Projeto projeto = ctx.bodyAsClass(Projeto.class);
                     projeto.setId(id);
+
+                    if(projeto.getNome().length() <= 0) {
+                        projeto.setNome(service.buscarPorId(id).getNome());
+                    }
+
+                    if(projeto.getDescricao().length() <= 0) {
+                        projeto.setDescricao(service.buscarPorId(id).getDescricao());
+                    }
 
                     boolean alterou = service.alterar(id, projeto);
 
@@ -138,10 +175,15 @@ public class Api {
             // METODOS DELETE
             //
 
-            //EDITAR PROJETO
+            //DELETAR PROJETO
             config.routes.delete(
-                "/api/projetos/{id}",
+                "/api/projeto/{id}",
                 ctx -> {
+                    try {
+                    service.carregar();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                     int id = Integer.parseInt(
                         ctx.pathParam("id")
