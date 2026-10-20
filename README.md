@@ -14,6 +14,7 @@ O objetivo deste projeto é demonstrar a integração de serviços Web (APIs RES
 
 * **Linguagem:** Java (JDK 17+)
 * **Interface Desktop:** Java Swing
+* **Interface Web:** HTML5, Bootstrap (5.3.3), Javascript
 * **Consumo de API:** `Javalin`
 * **Gerenciador de Pacotes:** `Maven`
 
@@ -32,3 +33,4 @@ O objetivo deste projeto é demonstrar a integração de serviços Web (APIs RES
 
 * **Clone o projeto:** git clone 'https://github.com/kaiquecerri/java-desktop'
 * **Rode:** ./start.sh
+* **Abrir pagina web:** acesse 'http://localhost:7070/index.html'
