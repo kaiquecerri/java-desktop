@@ -1,2 +1,51 @@
 id;nome;descricao;categoria;status
-1;DadoTec;Gerenciamento de Dados da Fatec;Desktop;Em desenvolvimento
+1;Sistema de Estoque;Controle de entrada e saida de produtos no almoxarifado;Desktop;Concluido
+2;App de Delivery;Aplicativo mobile para pedidos de comida e rastreamento;Mobile;Em desenvolvimento
+3;Portal Corporativo;Site institucional com area do colaborador e noticias;Web;Em planejamento
+4;ERP Financeiro;Modulo de contas a pagar e receber integrado ao banco;Desktop;Em desenvolvimento
+5;Agenda Medica;Sistema de agendamento de consultas e prontuario eletronico;Web;Concluido
+6;App de Fitness;Registro de treinos e acompanhamento de evolucao fisica;Mobile;Em desenvolvimento
+7;Loja Virtual;E-commerce com carrinho, pagamento e gestao de pedidos;Web;Em planejamento
+8;Sistema Escolar;Gestao de alunos, notas, turmas e frequencia;Desktop;Concluido
+9;App de Financas;Controle de gastos pessoais com graficos e metas;Mobile;Concluido
+10;Dashboard BI;Painel de indicadores com dados em tempo real;Web;Em desenvolvimento
+11;Sistema de RH;Modulo de folha de pagamento e controle de ponto;Desktop;Em planejamento
+12;App de Noticias;Leitor de feeds RSS com categorias e favoritos;Mobile;Concluido
+13;Plataforma EAD;Cursos online com videos, quizzes e certificados;Web;Em desenvolvimento
+14;Gestao de Frotas;Controle de veiculos, rotas e manutencoes preventivas;Desktop;Em planejamento
+15;App de Receitas;Receitas culinarias com lista de ingredientes e modo preparo;Mobile;Concluido
+16;Sistema de Chamados;Abertura e acompanhamento de tickets de suporte tecnico;Web;Em desenvolvimento
+17;Controle de Obras;Gestao de cronograma e orcamento de construcao civil;Desktop;Em planejamento
+18;App de Meditacao;Sessoes guiadas de mindfulness com temporizador;Mobile;Concluido
+19;Marketplace de Servicos;Plataforma que conecta prestadores e clientes;Web;Em desenvolvimento
+20;Sistema Juridico;Gestao de processos, prazos e documentos juridicos;Desktop;Em planejamento
+21;App de Clima;Previsao do tempo com alertas e mapa interativo;Mobile;Concluido
+22;Rede Social Academica;Plataforma de colaboracao entre pesquisadores;Web;Em planejamento
+23;Sistema Hospitalar;Gestao de leitos, cirurgias e prontuarios;Desktop;Em desenvolvimento
+24;App de Transporte;Carona solidaria com mapa e avaliacao de motoristas;Mobile;Em planejamento
+25;Portal de Empregos;Vagas de trabalho com filtros e candidatura online;Web;Concluido
+26;Sistema de Biblioteca;Emprestimo, devolucao e reserva de livros;Desktop;Concluido
+27;App de Idiomas;Aprendizado de linguas com flashcards e exercicios;Mobile;Em desenvolvimento
+28;Sistema de Vendas;PDV com emissao de nota fiscal e relatorios;Desktop;Concluido
+29;Blog Corporativo;Publicacao de artigos e gerenciamento de autores;Web;Em planejamento
+30;App de Viagens;Planejamento de roteiros com mapa e lista de destinos;Mobile;Em desenvolvimento
+31;Sistema de Ponto;Registro de entrada e saida de funcionarios via biometria;Desktop;Concluido
+32;Plataforma de Streaming;Transmissao de videos ao vivo com chat;Web;Em desenvolvimento
+33;App de Saude;Monitoramento de pressao, glicose e medicamentos;Mobile;Em planejamento
+34;Sistema de Leilao;Plataforma de lances em tempo real com pagamento;Web;Concluido
+35;Gestao de Eventos;Inscricoes, credenciamento e programacao de eventos;Desktop;Em desenvolvimento
+36;App de Podcasts;Reproducao e download de episodios com playlist;Mobile;Concluido
+37;Sistema de Seguros;Cotacao, emissao e gestao de apolices;Desktop;Em planejamento
+38;Portal de Noticias;Redacao, edicao e publicacao de materias jornalisticas;Web;Em desenvolvimento
+39;App de Pagamentos;Carteira digital com transferencias e pagamento de contas;Mobile;Concluido
+40;Sistema de Logistica;Rastreamento de entregas e gestao de rotas;Desktop;Em desenvolvimento
+41;App de Delivery Farmaceutico;Pedido e entrega de medicamentos em domicilio;Mobile;Em planejamento
+42;Plataforma de Freelancers;Contratacao de profissionais autonomos por projeto;Web;Em desenvolvimento
+43;Sistema de Contratos;Criacao, assinatura digital e arquivo de contratos;Desktop;Concluido
+44;App de Corrida;Monitoramento de GPS, pace e historico de treinos;Mobile;Em desenvolvimento
+45;Sistema de Academias;Plano de treino, matricula e controle de acesso;Desktop;Em planejamento
+46;Portal de Licitacoes;Publicacao e participacao em processos licitatorios;Web;Concluido
+47;App de Culinaria;Videos de receitas com modo passo a passo em tela;Mobile;Em planejamento
+48;Sistema de Gestao Agricola;Controle de safras, irrigacao e estoque rural;Desktop;Em desenvolvimento
+49;Plataforma de Doacoes;Campanhas solidarias com meta e transparencia;Web;Em planejamento
+50;App de Organizacao Pessoal;Tarefas, habitos e metas com lembretes diarios;Mobile;Concluido

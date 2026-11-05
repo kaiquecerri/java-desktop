@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gerenciamento de Projetos</title>
+
+    <!-- Bootstrap 5 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+
+    <style>
+      /* ── Reset & base ──────────────────────────────────────────────── */
+      :root {
+        --azul-primario: #2563eb;
+        --azul-escuro:   #1d4ed8;
+        --verde:         #10b981;
+        --amarelo:       #f59e0b;
+        --vermelho:      #ef4444;
+        --cinza-fundo:   #f5f7fa;
+        --cinza-card:    #ffffff;
+        --cinza-borda:   #e2e8f0;
+        --texto-label:   #475569;
+        --texto-tabela:  #1e293b;
+      }
+
+      body {
+        background-color: var(--cinza-fundo);
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        color: var(--texto-tabela);
+      }
+
+      /* ── Header / Navbar ───────────────────────────────────────────── */
+      .app-header {
+        background: var(--azul-primario);
+        padding: 1.1rem 2rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,.18);
+      }
+      .app-header h1 {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: #fff;
+        margin: 0;
+        letter-spacing: .4px;
+      }
+
+      /* ── Cards ─────────────────────────────────────────────────────── */
+      .card {
+        border: 1px solid var(--cinza-borda);
+        border-radius: 12px;
+        box-shadow: 0 1px 6px rgba(0,0,0,.07);
+      }
+      .card-title-section {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--azul-primario);
+        margin-bottom: 1.2rem;
+        padding-bottom: .6rem;
+        border-bottom: 2px solid var(--cinza-borda);
+      }
+
+      /* ── Formulário ────────────────────────────────────────────────── */
+      .form-label {
+        font-weight: 600;
+        font-size: .85rem;
+        color: var(--texto-label);
+        margin-bottom: .3rem;
+      }
+      .form-control,
+      .form-select {
+        border: 1px solid var(--cinza-borda);
+        border-radius: 8px;
+        font-size: .9rem;
+        padding: .45rem .75rem;
+        transition: border-color .2s, box-shadow .2s;
+      }
+      .form-control:focus,
+      .form-select:focus {
+        border-color: var(--azul-primario);
+        box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+      }
+
+      /* ── Botões ────────────────────────────────────────────────────── */
+      .btn {
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: .88rem;
+        padding: .45rem 1.1rem;
+        transition: opacity .15s, transform .1s;
+      }
+      .btn:active { transform: scale(.97); }
+      .btn-primary  { background: var(--azul-primario); border-color: var(--azul-primario); }
+      .btn-primary:hover  { background: var(--azul-escuro); border-color: var(--azul-escuro); }
+      .btn-warning  { background: var(--amarelo);  border-color: var(--amarelo);  color:#fff; }
+      .btn-warning:hover  { opacity: .88; color:#fff; }
+      .btn-success  { background: var(--verde);    border-color: var(--verde); }
+      .btn-success:hover  { opacity: .88; }
+      .btn-danger   { background: var(--vermelho); border-color: var(--vermelho); }
+      .btn-danger:hover   { opacity: .88; }
+      .btn-secondary { background: #64748b; border-color: #64748b; }
+      .btn-secondary:hover { opacity: .88; }
+
+      /* ── Tabela ────────────────────────────────────────────────────── */
+      .table {
+        font-size: .9rem;
+        margin-bottom: 0;
+      }
+      .table thead th {
+        background: var(--azul-primario);
+        color: #fff;
+        font-weight: 700;
+        border: none;
+        padding: .75rem 1rem;
+      }
+      .table thead th:first-child { border-radius: 8px 0 0 0; }
+      .table thead th:last-child  { border-radius: 0 8px 0 0; }
+      .table tbody tr { transition: background .15s; }
+      .table tbody tr:hover { background: rgba(37,99,235,.06); }
+      .table tbody td {
+        vertical-align: middle;
+        padding: .65rem 1rem;
+        border-color: var(--cinza-borda);
+        color: var(--texto-tabela);
+      }
+
+      /* ── Badges de status ──────────────────────────────────────────── */
+      .badge-status {
+        display: inline-block;
+        padding: .28em .75em;
+        border-radius: 20px;
+        font-size: .8rem;
+        font-weight: 600;
+      }
+      .badge-planejamento  { background: #dbeafe; color: #1d4ed8; }
+      .badge-desenvolvimento { background: #fef3c7; color: #b45309; }
+      .badge-concluido     { background: #d1fae5; color: #065f46; }
+
+      /* ── Modal ─────────────────────────────────────────────────────── */
+      .modal-content {
+        border-radius: 12px;
+        border: 1px solid var(--cinza-borda);
+        box-shadow: 0 8px 32px rgba(0,0,0,.15);
+      }
+      .modal-header {
+        background: var(--azul-primario);
+        border-radius: 12px 12px 0 0;
+        color: #fff;
+      }
+      .modal-header .btn-close { filter: invert(1); }
+
+      /* ── Responsivo ────────────────────────────────────────────────── */
+      @media (max-width: 768px) {
+        .app-header h1 { font-size: 1.1rem; }
+        .btn-toolbar-custom { flex-wrap: wrap; gap: .5rem; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ══ Header ════════════════════════════════════════════════════════ -->
+    <header class="app-header d-flex align-items-center gap-2">
+      <i class="bi bi-clipboard2-check-fill fs-4 text-white"></i>
+      <h1>Sistema de Gerenciamento de Projetos</h1>
+    </header>
+
+    <div class="container-fluid px-4 py-4">
+      <div class="row g-4">
+
+        <!-- ══ Card Formulário ══════════════════════════════════════════ -->
+        <div class="col-12">
+          <div class="card p-4">
+            <h2 class="card-title-section">
+              <i class="bi bi-plus-circle me-1"></i> Novo Projeto
+            </h2>
+
+            <form id="formCadastro">
+              <div class="row g-3">
+                <!-- Nome -->
+                <div class="col-md-6">
+                  <label for="nome" class="form-label">Nome</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="nome"
+                    name="nome"
+                    placeholder="Nome do projeto"
+                  />
+                </div>
+
+                <!-- Descrição -->
+                <div class="col-md-6">
+                  <label for="descricao" class="form-label">Descrição</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="descricao"
+                    name="descricao"
+                    placeholder="Descrição do projeto"
+                  />
+                </div>
+
+                <!-- Categoria -->
+                <div class="col-md-6">
+                  <label for="categoria" class="form-label">Categoria</label>
+                  <select class="form-select" id="categoria" name="categoria">
+                    <option value="Web">Web</option>
+                    <option value="Mobile">Mobile</option>
+                    <option value="Desktop">Desktop</option>
+                    <option value="Outro">Outro</option>
+                  </select>
+                </div>
+
+                <!-- Status -->
+                <div class="col-md-6">
+                  <label for="status" class="form-label">Status</label>
+                  <select class="form-select" id="status" name="status">
+                    <option value="Em planejamento">Em planejamento</option>
+                    <option value="Em desenvolvimento">Em desenvolvimento</option>
+                    <option value="Concluido">Concluído</option>
+                  </select>
+                </div>
+
+                <!-- Botões -->
+                <div class="col-12 d-flex justify-content-end gap-2 mt-1">
+                  <button type="reset" class="btn btn-secondary">
+                    <i class="bi bi-x-lg me-1"></i>Limpar
+                  </button>
+                  <button type="button" class="btn btn-primary" onclick="Cadastrar()">
+                    <i class="bi bi-plus-lg me-1"></i>Cadastrar
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- ══ Card Tabela ══════════════════════════════════════════════ -->
+        <div class="col-12">
+          <div class="card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h2 class="card-title-section mb-0 border-0 pb-0">
+                <i class="bi bi-table me-1"></i> Projetos Cadastrados
+              </h2>
+              <button class="btn btn-success btn-sm" onclick="Exibir()">
+                <i class="bi bi-arrow-clockwise me-1"></i>Recarregar
+              </button>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-hover align-middle">
+                <thead>
+                  <tr>
+                    <th scope="col" style="width:60px">ID</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Status</th>
+                    <th scope="col" style="width:140px" class="text-center">Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="tableBody">
+                  <!-- Linhas inseridas via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /row -->
+    </div><!-- /container -->
+
+    <!-- ══ Modal Editar ══════════════════════════════════════════════════ -->
+    <div
+      class="modal fade"
+      id="modalEditar"
+      tabindex="-1"
+      aria-labelledby="modalEditarLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold" id="modalEditarLabel">
+              <i class="bi bi-pencil-square me-1"></i> Editar Projeto
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Fechar"
+            ></button>
+          </div>
+          <div class="modal-body" id="popup"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ Script ════════════════════════════════════════════════════════ -->
+    <script>
+      const url = "http://localhost:7070";
+
+      // ── Badge de status ──────────────────────────────────────────────
+      function badgeStatus(status) {
+        const mapa = {
+          "Em planejamento":  "badge-planejamento",
+          "Em desenvolvimento": "badge-desenvolvimento",
+          "Concluido":        "badge-concluido",
+        };
+        const cls = mapa[status] || "badge-planejamento";
+        return `<span class="badge-status ${cls}">${status}</span>`;
+      }
+
+      // ── Cadastrar ────────────────────────────────────────────────────
+      async function Cadastrar() {
+        const nome      = document.getElementById("nome").value.trim();
+        const descricao = document.getElementById("descricao").value.trim();
+        const categoria = document.getElementById("categoria").value;
+        const status    = document.getElementById("status").value;
+
+        if (!nome || !descricao) {
+          alert("Preencha todos os campos obrigatórios.");
+          return;
+        }
+
+        await fetch(`${url}/api/projeto`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nome, descricao, categoria, status }),
+        });
+
+        document.getElementById("formCadastro").reset();
+        Exibir();
+      }
+
+      // ── Carregar formulário de edição ────────────────────────────────
+      async function CarregarEditar(id) {
+        const resposta = await fetch(`${url}/api/projeto/${id}`);
+        const p = await resposta.json();
+
+        document.getElementById("popup").innerHTML = `
+          <form id="formEditar" class="p-2">
+            <div class="row g-3">
+              <div class="col-12">
+                <label for="nomeEditar" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="nomeEditar"
+                  placeholder="${p.nome}" />
+              </div>
+              <div class="col-12">
+                <label for="descricaoEditar" class="form-label">Descrição</label>
+                <input type="text" class="form-control" id="descricaoEditar"
+                  placeholder="${p.descricao}" />
+              </div>
+              <div class="col-6">
+                <label for="categoriaEditar" class="form-label">Categoria</label>
+                <select class="form-select" id="categoriaEditar">
+                  <option value="Web"     ${p.categoria==="Web"     ? "selected" : ""}>Web</option>
+                  <option value="Mobile"  ${p.categoria==="Mobile"  ? "selected" : ""}>Mobile</option>
+                  <option value="Desktop" ${p.categoria==="Desktop" ? "selected" : ""}>Desktop</option>
+                  <option value="Outro"   ${p.categoria==="Outro"   ? "selected" : ""}>Outro</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label for="statusEditar" class="form-label">Status</label>
+                <select class="form-select" id="statusEditar">
+                  <option value="Em planejamento"   ${p.status==="Em planejamento"   ? "selected" : ""}>Em planejamento</option>
+                  <option value="Em desenvolvimento" ${p.status==="Em desenvolvimento" ? "selected" : ""}>Em desenvolvimento</option>
+                  <option value="Concluido"          ${p.status==="Concluido"          ? "selected" : ""}>Concluído</option>
+                </select>
+              </div>
+              <div class="col-12 d-flex justify-content-end gap-2">
+                <button type="button" class="btn btn-secondary"
+                  data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-warning"
+                  onclick="Editar(${id})">
+                  <i class="bi bi-check-lg me-1"></i>Salvar alterações
+                </button>
+              </div>
+            </div>
+          </form>`;
+
+        new bootstrap.Modal(document.getElementById("modalEditar")).show();
+      }
+
+      // ── Salvar edição ────────────────────────────────────────────────
+      async function Editar(id) {
+        const nome      = document.getElementById("nomeEditar").value;
+        const descricao = document.getElementById("descricaoEditar").value;
+        const categoria = document.getElementById("categoriaEditar").value;
+        const status    = document.getElementById("statusEditar").value;
+
+        await fetch(`${url}/api/projeto/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nome, descricao, categoria, status }),
+        });
+
+        Exibir();
+        bootstrap.Modal.getInstance(document.getElementById("modalEditar")).hide();
+      }
+
+      // ── Deletar ──────────────────────────────────────────────────────
+      async function Deletar(id) {
+        if (!confirm("Tem certeza que deseja excluir este projeto?\nEsta ação não pode ser revertida.")) return;
+        await fetch(`${url}/api/projeto/${id}`, { method: "DELETE" });
+        Exibir();
+      }
+
+      // ── Exibir tabela ────────────────────────────────────────────────
+      async function Exibir() {
+        const resposta = await fetch(`${url}/api/projetos`);
+        const projetos = await resposta.json();
+        const corpo    = document.getElementById("tableBody");
+
+        corpo.replaceChildren();
+
+        if (projetos.length === 0) {
+          corpo.innerHTML = `
+            <tr>
+              <td colspan="6" class="text-center text-muted py-4">
+                <i class="bi bi-inbox fs-3 d-block mb-2"></i>
+                Nenhum projeto cadastrado.
+              </td>
+            </tr>`;
+          return;
+        }
+
+        for (const p of projetos) {
+          corpo.insertAdjacentHTML("beforeend", `
+            <tr>
+              <td>${p.id}</td>
+              <td><strong>${p.nome}</strong></td>
+              <td>${p.descricao}</td>
+              <td>
+                <span class="badge bg-primary bg-opacity-10 text-primary
+                  fw-semibold px-2 py-1 rounded-pill">
+                  ${p.categoria}
+                </span>
+              </td>
+              <td>${badgeStatus(p.status)}</td>
+              <td class="text-center">
+                <button class="btn btn-warning btn-sm"
+                  onclick="CarregarEditar(${p.id})" title="Editar">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-danger btn-sm ms-1"
+                  onclick="Deletar(${p.id})" title="Excluir">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>`);
+        }
+      }
+
+      // Carrega a tabela ao abrir a página
+      Exibir();
+    </script>
+  </body>
+</html>
